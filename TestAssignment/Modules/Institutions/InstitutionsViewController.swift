@@ -8,13 +8,20 @@
 
 import UIKit
 
-class InstitutionsViewController: UIViewController {
+class InstitutionsViewController: UIViewController, BasicView {
   
-  let viewModel: InstitutionsViewModel
+  enum State {
+    case viewDidLoad
+    case institutionDidSelected(atIndex: Int)
+  }
+  
+  typealias ViewModel = InstitutionsViewModel
+  
+  let viewModel: ViewModel
   
   let btn = UIButton()
   
-  init(viewModel: InstitutionsViewModel) {
+  required init(viewModel: InstitutionsViewModel) {
     self.viewModel = viewModel
 
     super.init(nibName: nil, bundle: nil)
@@ -33,16 +40,15 @@ class InstitutionsViewController: UIViewController {
     
     view.addSubview(btn)
   }
-  
-  @objc func btnTapped() {
-    viewModel.showInstitution(at: IndexPath(row: 0, section: 0))
-  }
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view, typically from a nib.
+    viewModel.updateViewModelState(for: .viewDidLoad)
   }
-
+  
+  @objc func btnTapped() {
+    viewModel.updateViewModelState(for: .institutionDidSelected(atIndex: 0))
+  }
 
 }
 

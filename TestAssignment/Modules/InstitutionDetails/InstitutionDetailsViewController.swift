@@ -8,18 +8,28 @@
 
 import UIKit
 
-class InstitutionDetailsViewController: UIViewController {
+class InstitutionDetailsViewController: UIViewController, BasicView {
+  typealias ViewModel = BasicInstitutionDetailsViewModel
   
-  let viewModel: InstitutionDetailsViewModel
+  enum State {
+    case viewDidLoad
+    case viewDidClose
+    case mapDidOpen
+  }
+  
+  
+  let viewModel: ViewModel
   
   let btn = UIButton()
   
-  init(viewModel: InstitutionDetailsViewModel) {
+  required init(viewModel: BasicInstitutionDetailsViewModel) {
     self.viewModel = viewModel
     
     super.init(nibName: nil, bundle: nil)
   }
   
+  required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
   override func loadView() {
     super.loadView()
     view.backgroundColor = .yellow
@@ -32,10 +42,13 @@ class InstitutionDetailsViewController: UIViewController {
     view.addSubview(btn)
   }
   
-  required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    viewModel.updateViewModelState(for: .viewDidLoad)
+  }
   
   @objc func btnTapped() {
-    viewModel.closeDetails()
+    viewModel.updateViewModelState(for: .viewDidClose)
   }
   
 }

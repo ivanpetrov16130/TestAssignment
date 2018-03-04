@@ -26,7 +26,7 @@ class InstitutionDetailsModule: Module {
   
   private(set) lazy var viewModelsContainer: Container = {
     let container = Container(parent: servicesContainer)
-    container.register(InstitutionDetailsViewModel.self) { resolver, institutionId in
+    container.register(BasicInstitutionDetailsViewModel.self) { resolver, institutionId in
       BasicInstitutionDetailsViewModel(holderModule: self, provider: resolver.resolve(InstitutionsProvider.self)!, institutionId: institutionId) //TODO: fix force unwrap
     }
     return container
@@ -35,7 +35,7 @@ class InstitutionDetailsModule: Module {
   private(set) lazy var viewsContainer: Container = {
     let container = Container(parent: viewModelsContainer)
     container.register(InstitutionDetailsViewController.self) { resolver in
-      InstitutionDetailsViewController(viewModel: resolver.resolve(InstitutionDetailsViewModel.self, argument: self.incomeData)!) //TODO: fix force unwrap
+      InstitutionDetailsViewController(viewModel: resolver.resolve(BasicInstitutionDetailsViewModel.self, argument: self.incomeData)!) //TODO: fix force unwrap
     }
     return container
   }()

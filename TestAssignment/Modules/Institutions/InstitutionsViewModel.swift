@@ -8,48 +8,54 @@
 
 import Foundation
 import RxSwift
+import RxCocoa
 
 
-protocol InstitutionsViewModel: ViewModel {
+class InstitutionsViewModel: BasicViewModel {
   
-  weak var holderModule: InstitutionsModule? { get }
-  
-  init(holderModule: InstitutionsModule, provider: InstitutionsProvider)
-  
-  func showInstitution(at indexPath: IndexPath)
-}
+  typealias View = InstitutionsViewController
 
-
-struct BasicInstitutionsViewModel: InstitutionsViewModel {
+  enum State {
+    case initial
+    case loadingInstitutions
+    case loaded(institutions: [Institution])
+    case failedLoading(error: Error)
+    case noInstitutions
+  }
   
+  let viewStatesReactionQueue: DispatchQueue = InstitutionsViewModel.newViewStatesReactionQueue
   private(set) weak var holderModule: InstitutionsModule?
-  
   private let provider: InstitutionsProvider
-  
   private let disposeBag = DisposeBag()
   
-  init(holderModule: InstitutionsModule, provider: InstitutionsProvider) {
+  let state: ObservableState = BehaviorRelay(value: .initial)
+
+
+  required init(holderModule: InstitutionsModule, provider: InstitutionsProvider) {
     self.holderModule = holderModule
     self.provider = provider
-    
-    provider.rx.request(.institutions)
-      .map([String: Institution].self)
-      .map { (keyedInstitutions) -> [Institution] in
-        keyedInstitutions.map{ $0.value }
-      }
-      .subscribe(onSuccess: { (institutions) in
-        print(institutions)
-        //state.value = .institutionsLoaded(institutions)
-      }) { (error) in
-        print(error)
-        //state.value = .institutionsFailed(error)
-      }
-      .disposed(by: disposeBag)
   }
   
-  func showInstitution(at indexPath: IndexPath) {
-    holderModule?.finish(outcome: .finished(result: "id"))
+  func viewModelState(for viewState: View.State) {
+    switch viewState {
+    case .viewDidLoad:
+      state.accept(.loadingInstitutions)
+      provider.rx.request(.institutions)
+        .map([String: Institution].self)
+        .map { (keyedInstitutions) -> [Institution] in
+          keyedInstitutions.map{ $0.value }
+        }
+        .subscribe(onSuccess: { [unowned self] institutions in
+          self.state.accept(.loaded(institutions: institutions))
+        }) { [unowned self] (error) in
+          self.state.accept(.failedLoading(error: error))
+        }
+        .disposed(by: disposeBag)
+    case .institutionDidSelected(atIndex: let index):
+      holderModule?.finish(outcome: .finished(result: "id \(index)"))
+    }
   }
+
   
   
 }

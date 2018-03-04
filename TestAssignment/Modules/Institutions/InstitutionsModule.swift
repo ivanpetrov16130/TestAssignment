@@ -10,6 +10,7 @@ import Swinject
 
 
 class InstitutionsModule: Module {
+    
   typealias BaseView = UINavigationController
 
   typealias IncomeData = Void
@@ -26,7 +27,7 @@ class InstitutionsModule: Module {
   private(set) lazy var viewModelsContainer: Container = {
     let container = Container(parent: servicesContainer)
     container.register(InstitutionsViewModel.self) { resolver in
-      BasicInstitutionsViewModel(holderModule: self, provider: resolver.resolve(InstitutionsProvider.self)!) //TODO: fix force unwrap
+      InstitutionsViewModel(holderModule: self, provider: resolver.resolve(InstitutionsProvider.self)!) //TODO: fix force unwrap
     }
     return container
   }()
