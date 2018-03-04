@@ -11,7 +11,7 @@ import Foundation
 protocol InstitutionDetailsViewModel: ViewModel {
   weak var holderModule: InstitutionDetailsModule? { get }
   
-  init(holderModule: InstitutionDetailsModule, networkService: NetworkService, institutionId: InstitutionDetailsModule.IncomeData)
+  init(holderModule: InstitutionDetailsModule, provider: InstitutionsProvider, institutionId: InstitutionDetailsModule.IncomeData)
   
   func closeDetails()
 }
@@ -22,7 +22,7 @@ struct BasicInstitutionDetailsViewModel: InstitutionDetailsViewModel {
   
   let institutionId: InstitutionDetailsModule.IncomeData
   
-  init(holderModule: InstitutionDetailsModule, networkService: NetworkService, institutionId: InstitutionDetailsModule.IncomeData) {
+  init(holderModule: InstitutionDetailsModule, provider: InstitutionsProvider, institutionId: InstitutionDetailsModule.IncomeData) {
     self.holderModule = holderModule
     self.institutionId = institutionId
   }

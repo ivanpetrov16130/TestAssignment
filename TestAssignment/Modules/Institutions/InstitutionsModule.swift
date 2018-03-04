@@ -26,7 +26,7 @@ class InstitutionsModule: Module {
   private(set) lazy var viewModelsContainer: Container = {
     let container = Container(parent: servicesContainer)
     container.register(InstitutionsViewModel.self) { resolver in
-      BasicInstitutionsViewModel(holderModule: self, networkService: resolver.resolve(NetworkService.self)!) //TODO: fix force unwrap
+      BasicInstitutionsViewModel(holderModule: self, provider: resolver.resolve(InstitutionsProvider.self)!) //TODO: fix force unwrap
     }
     return container
   }()

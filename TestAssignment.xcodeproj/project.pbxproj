@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C054D42204C155F0075D319 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C054D41204C155F0075D319 /* Models.swift */; };
 		2C8CD4C7204AEF5C007F2F03 /* InstitutionsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8CD4C6204AEF5C007F2F03 /* InstitutionsModule.swift */; };
 		2C8CD4C9204AF445007F2F03 /* InstitutionDetailsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8CD4C8204AF445007F2F03 /* InstitutionDetailsModule.swift */; };
-		2C8CD4CC204B2517007F2F03 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8CD4CB204B2517007F2F03 /* NetworkService.swift */; };
+		2C8CD4CC204B2517007F2F03 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8CD4CB204B2517007F2F03 /* Networking.swift */; };
 		2C8CD4CF204B363E007F2F03 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8CD4CE204B363E007F2F03 /* Module.swift */; };
 		2CF9F17C20486C860070679C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F17B20486C860070679C /* AppDelegate.swift */; };
 		2CF9F17E20486C860070679C /* InstitutionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F17D20486C860070679C /* InstitutionsViewController.swift */; };
@@ -25,9 +26,10 @@
 
 /* Begin PBXFileReference section */
 		0B9EE3A64DB55F115E51B3A9 /* Pods-TestAssignment.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestAssignment.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TestAssignment/Pods-TestAssignment.debug.xcconfig"; sourceTree = "<group>"; };
+		2C054D41204C155F0075D319 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		2C8CD4C6204AEF5C007F2F03 /* InstitutionsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionsModule.swift; sourceTree = "<group>"; };
 		2C8CD4C8204AF445007F2F03 /* InstitutionDetailsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionDetailsModule.swift; sourceTree = "<group>"; };
-		2C8CD4CB204B2517007F2F03 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		2C8CD4CB204B2517007F2F03 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		2C8CD4CE204B363E007F2F03 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
 		2CF9F17820486C860070679C /* TestAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CF9F17B20486C860070679C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -65,10 +67,26 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		2C054D3F204C14E30075D319 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				2C8CD4CB204B2517007F2F03 /* Networking.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		2C054D40204C14F90075D319 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2C054D41204C155F0075D319 /* Models.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		2C8CD4CA204B2500007F2F03 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				2C8CD4CB204B2517007F2F03 /* NetworkService.swift */,
+				2C054D3F204C14E30075D319 /* Network */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -104,6 +122,7 @@
 		2CF9F17A20486C860070679C /* TestAssignment */ = {
 			isa = PBXGroup;
 			children = (
+				2C054D40204C14F90075D319 /* Models */,
 				2C8CD4CD204B3627007F2F03 /* Application flow */,
 				2C8CD4CA204B2500007F2F03 /* Services */,
 				2CF9F193204889F30070679C /* Modules */,
@@ -290,12 +309,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C8CD4CC204B2517007F2F03 /* NetworkService.swift in Sources */,
+				2C8CD4CC204B2517007F2F03 /* Networking.swift in Sources */,
 				2CF9F190204885F40070679C /* InstitutionDetailsViewController.swift in Sources */,
 				2CF9F17E20486C860070679C /* InstitutionsViewController.swift in Sources */,
 				2CF9F19920488AC20070679C /* InstitutionDetailsViewModel.swift in Sources */,
 				2CF9F18E20487B610070679C /* ApplicationFlow.swift in Sources */,
 				2CF9F1922048869B0070679C /* Common.swift in Sources */,
+				2C054D42204C155F0075D319 /* Models.swift in Sources */,
 				2CF9F17C20486C860070679C /* AppDelegate.swift in Sources */,
 				2C8CD4C7204AEF5C007F2F03 /* InstitutionsModule.swift in Sources */,
 				2CF9F19720488A3A0070679C /* InstitutionsViewModel.swift in Sources */,

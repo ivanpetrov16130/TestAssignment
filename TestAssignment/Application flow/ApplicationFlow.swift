@@ -19,8 +19,8 @@ class ApplicationFlow {
   
   private let servicesContainer: Container = {
     let container = Container()
-    container.register(NetworkService.self) { _ in
-      InstitutionsNetworkService()
+    container.register(InstitutionsProvider.self) { _ in
+      InstitutionsProvider()
     }
     return container
   }()

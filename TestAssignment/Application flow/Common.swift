@@ -19,5 +19,13 @@ import UIKit
 //}
 
 protocol ViewModel {
+  
+  func viewDidLoad()
+  
+}
+  
+extension ViewModel {
 
+  func viewDidLoad() {}
+  
 }
