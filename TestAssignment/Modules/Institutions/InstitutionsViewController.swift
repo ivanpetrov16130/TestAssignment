@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Yalta
 
 class InstitutionsViewController: UIViewController, BasicView {
   
@@ -19,7 +20,8 @@ class InstitutionsViewController: UIViewController, BasicView {
   
   let viewModel: ViewModel
   
-  let btn = UIButton()
+  let institutionsView: UITableView = UITableView(frame: .zero, style: .plain).styled(with: InstitutionsViewStyles.institutions)
+
   
   required init(viewModel: InstitutionsViewModel) {
     self.viewModel = viewModel
@@ -33,12 +35,7 @@ class InstitutionsViewController: UIViewController, BasicView {
     super.loadView()
     view.backgroundColor = .green
     
-    btn.frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 60))
-    btn.backgroundColor = .blue
-    btn.center = view.center
-    btn.addTarget(self, action: #selector(btnTapped), for: .touchUpInside)
-    
-    view.addSubview(btn)
+    buildViewHierarchyWithConstraints()
   }
 
   override func viewDidLoad() {
@@ -46,10 +43,16 @@ class InstitutionsViewController: UIViewController, BasicView {
     viewModel.updateViewModelState(for: .viewDidLoad)
   }
   
-  @objc func btnTapped() {
-    viewModel.updateViewModelState(for: .institutionDidSelected(atIndex: 0))
-  }
+//  @objc func btnTapped() {
+//    viewModel.updateViewModelState(for: .institutionDidSelected(atIndex: 0))
+//  }
+  
 
 }
 
+extension InstitutionsViewController: Autolayouted {
+  var viewHierarchy: ViewHierarchy {
+    return ViewHierarchy.plain(institutionsView, constrainted: { $0.edges.pinToSafeArea(of: self) } )
+  }
+}
 

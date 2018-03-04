@@ -11,12 +11,14 @@ PODS:
     - RxSwift (~> 4.0)
   - RxSwift (4.1.2)
   - Swinject (2.2.0)
+  - Yalta (0.5)
 
 DEPENDENCIES:
   - Moya/RxSwift
   - RxCocoa
   - RxSwift
   - Swinject
+  - Yalta
 
 SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
@@ -25,7 +27,8 @@ SPEC CHECKSUMS:
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
   RxSwift: e49536837d9901277638493ea537394d4b55f570
   Swinject: 4ca48bca7de5f398229a26abe1ac902b9f3ee541
+  Yalta: 49e14f2fe320ed52f0849482b0f7b0489ba4aa4c
 
-PODFILE CHECKSUM: 5bce7cd548a5a71ce5170c7d334ad6d1b7d77e68
+PODFILE CHECKSUM: e7dfa42eb95d4f418719af39480c620fcb79b2ae
 
 COCOAPODS: 1.4.0

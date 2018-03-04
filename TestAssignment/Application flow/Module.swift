@@ -52,7 +52,7 @@ extension Module {
   func finish(outcome: ModuleOutcome<OutcomeData>) {
     switch outcome {
     case .cancelled: applicationFlow?.close(module: self)
-    case .finished(result: let result): applicationFlow?.pass(module: self, with: result)
+    case .finished(result: let result): applicationFlow?.finish(module: self, with: result)
     }
   }
   

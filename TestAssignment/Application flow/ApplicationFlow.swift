@@ -8,6 +8,7 @@
 
 import Foundation
 import Swinject
+import class Moya.NetworkLoggerPlugin
 
 
 enum TransitionType {
@@ -20,7 +21,7 @@ class ApplicationFlow {
   private let servicesContainer: Container = {
     let container = Container()
     container.register(InstitutionsProvider.self) { _ in
-      InstitutionsProvider()
+      InstitutionsProvider(plugins: [NetworkLoggerPlugin(verbose: true)])
     }
     return container
   }()
@@ -41,7 +42,7 @@ class ApplicationFlow {
     window?.rootViewController = modulesContainer.resolve(InstitutionsModule.self)?.startupView
   }
   
-  func close<M: Module>(module: M) {
+  func close<CurrentModule: Module>(module: CurrentModule) {
     if let moduleTransitioned = module.transitioned {
       switch moduleTransitioned {
       case .modally: module.startupView.dismiss(animated: true)
@@ -53,11 +54,11 @@ class ApplicationFlow {
 
   }
   
-  func pass<M: Module>(module: M, with result: M.OutcomeData) {
+  func finish<CurrentModule: Module>(module: CurrentModule, with result: CurrentModule.OutcomeData) {
     switch module {
-    case is InstitutionsModule:
+    case is InstitutionsModule where CurrentModule.OutcomeData.self is InstitutionDetailsModule.IncomeData.Type:
       modulesContainer.resolve(InstitutionDetailsModule.self, argument: result)?.run(basedOn: module.startupView, transitioned: .modally)
-    case is InstitutionDetailsModule:
+    case is InstitutionDetailsModule where CurrentModule.OutcomeData.self is InstitutionDetailsModule.IncomeData.Type:
       fallthrough //TODO: remove fallthrough
     default: self.close(module: module)
     }
