@@ -103,15 +103,32 @@ extension UIView {
   
 }
 
+
+protocol Alertable {
+  func alert(about error: Error)
+}
+
+extension Alertable where Self: UIViewController {
+  func alert(about error: Error) {
+    let alertViewController = UIAlertController(title: "Ошибка", message: error.localizedDescription, preferredStyle: .alert)
+    self.present(alertViewController, animated: true)
+  }
+}
+
+
+
 enum ViewHierarchy {
   
   typealias ContraintsApplicator = (LayoutProxy<UIView>) -> Void
   
+  case rootless(subhierarchy: [ViewHierarchy])
   case plain(UIView, constrainted: ContraintsApplicator)
   case complex(UIView, constrainted: ContraintsApplicator, subhierarchy: [ViewHierarchy])
   
   func build(in superview: UIView) {
     switch self {
+    case .rootless(subhierarchy: let subhierarchy):
+      subhierarchy.forEach{ $0.build(in: superview) }
     case .plain(let view, constrainted: _):
       superview.addSubview(view)
     case .complex(let view, constrainted: _, subhierarchy: let subhierarchy):
@@ -122,6 +139,8 @@ enum ViewHierarchy {
   
   var constraintApplicators: [(view: UIView, constrainted: ContraintsApplicator)] {
     switch self {
+    case .rootless(subhierarchy: let subhierarchy):
+      return subhierarchy.flatMap { $0.constraintApplicators }
     case .plain(let view, constrainted: let constraintsApplicator):
       return [(view: view, constrainted: constraintsApplicator)]
     case .complex(let view, constrainted: let constraintsApplicator, subhierarchy: let subhierarchy):
@@ -154,7 +173,7 @@ extension Autolayouted where Self: UIViewController {
 }
 
 extension Autolayouted where Self: UITableViewCell {
-  func buildViewHierarchyWithConstrainsts() { buildViewHierarchyWithConstraints(in: contentView) }
+  func buildViewHierarchyWithConstraints() { buildViewHierarchyWithConstraints(in: contentView) }
 }
 
 extension Autolayouted where Self: UICollectionViewCell {

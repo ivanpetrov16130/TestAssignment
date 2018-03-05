@@ -29,6 +29,7 @@ enum InstitutionsViewStyles {
   static let institutionRating = Style<UILabel> {
     $0.textColor = .lightGray
   }
+
   
 }
 
@@ -43,8 +44,33 @@ class InstitutionCell: UITableViewCell {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     self.selectionStyle = .none
     
+    buildViewHierarchyWithConstraints()
   }
   
   required init?(coder aDecoder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+  
+}
+
+extension InstitutionCell: Autolayouted {
+  var viewHierarchy: ViewHierarchy {
+    return ViewHierarchy.rootless(subhierarchy:
+      [ViewHierarchy.plain(nameLabel,
+                           constrainted: {
+                             $0.edges(.left, .top, .right).pinToSuperview(insets: UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16))
+                          }),
+       ViewHierarchy.plain(descriptionLabel,
+                           constrainted: {
+                            $0.edges(.left, .right).pinToSuperview(insets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+                            $0.top.align(with: self.nameLabel.al.bottom)
+                          }),
+       ViewHierarchy.plain(ratingLabel,
+                           constrainted: {
+                            $0.top.align(with: self.descriptionLabel.al.bottom)
+                            $0.edges(.left, .bottom).pinToSuperview()
+       })
+      ]
+    )
+  }
+  
   
 }

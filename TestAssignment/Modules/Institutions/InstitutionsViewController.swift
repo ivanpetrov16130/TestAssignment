@@ -8,8 +8,9 @@
 
 import UIKit
 import Yalta
+import RxSwift
 
-class InstitutionsViewController: UIViewController, BasicView {
+class InstitutionsViewController: UIViewController, BasicView, Alertable {
   
   enum State {
     case viewDidLoad
@@ -19,9 +20,10 @@ class InstitutionsViewController: UIViewController, BasicView {
   typealias ViewModel = InstitutionsViewModel
   
   let viewModel: ViewModel
+  let disposeBag = DisposeBag()
   
   let institutionsView: UITableView = UITableView(frame: .zero, style: .plain).styled(with: InstitutionsViewStyles.institutions)
-
+  let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
   
   required init(viewModel: InstitutionsViewModel) {
     self.viewModel = viewModel
@@ -41,6 +43,29 @@ class InstitutionsViewController: UIViewController, BasicView {
   override func viewDidLoad() {
     super.viewDidLoad()
     viewModel.updateViewModelState(for: .viewDidLoad)
+    
+    viewModel.state.subscribe(onNext: { [unowned self] state in
+      switch state {
+      case .loadingInstitutions:
+        self.activityIndicator.startAnimating()
+      case .loaded(institutions: let institutions):
+        self.activityIndicator.stopAnimating()
+        Observable.just(institutions).bind(to: self.institutionsView.rx.items(cellIdentifier: InstitutionCell.reuseId, cellType: InstitutionCell.self)) {
+          index, institution, institutionCell in
+          institutionCell.nameLabel.text = institution.name
+          institutionCell.descriptionLabel.text = institution.introDescription
+          institutionCell.ratingLabel.text = "\(institution.rating)"
+        }
+        .disposed(by: self.disposeBag)
+        self.institutionsView.reloadData()
+      case .failedLoading(error: let error):
+        self.activityIndicator.stopAnimating()
+        self.alert(about: error)
+      default:
+        self.activityIndicator.stopAnimating()
+      }
+    })
+    .disposed(by: disposeBag)
   }
   
 //  @objc func btnTapped() {
