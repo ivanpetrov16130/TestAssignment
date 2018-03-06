@@ -8,8 +8,9 @@
 
 import UIKit
 
-class InstitutionDetailsViewController: UIViewController, BasicView {
-  typealias ViewModel = BasicInstitutionDetailsViewModel
+class InstitutionDetailsViewController: UIViewController, BasicView, Alertable {
+  typealias Interactor = InstitutionDetailsInteractor
+  typealias ViewModel  = InstitutionDetailsViewModel
   
   enum State {
     case viewDidLoad
@@ -18,11 +19,13 @@ class InstitutionDetailsViewController: UIViewController, BasicView {
   }
   
   
+  let interactor: Interactor
   let viewModel: ViewModel
   
-  let btn = UIButton()
+  let scrollView: UIScrollView = UIScrollView(frame: .zero)
   
-  required init(viewModel: BasicInstitutionDetailsViewModel) {
+  required init(interactor: InstitutionDetailsInteractor, viewModel: InstitutionDetailsViewModel) {
+    self.interactor = interactor
     self.viewModel = viewModel
     
     super.init(nibName: nil, bundle: nil)
@@ -33,24 +36,37 @@ class InstitutionDetailsViewController: UIViewController, BasicView {
   override func loadView() {
     super.loadView()
     view.backgroundColor = .yellow
-    
-    btn.frame = CGRect(origin: .zero, size: CGSize(width: 100, height: 60))
-    btn.backgroundColor = .blue
-    btn.center = view.center
-    btn.addTarget(self, action: #selector(btnTapped), for: .touchUpInside)
-    
-    view.addSubview(btn)
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    viewModel.updateViewModelState(for: .viewDidLoad)
+    
+    
+    
+    interactor.computeState(for: .viewDidLoad)
   }
   
-  @objc func btnTapped() {
-    viewModel.updateViewModelState(for: .viewDidClose)
-  }
+//  @objc func btnTapped() {
+//    interactor.computeState(for: .viewDidClose)
+//  }
   
 }
 
+extension InstitutionDetailsViewController: Autolayouted {
+  var viewHierarchy: ViewHierarchy {
+    return ViewHierarchy.complex(UIView(),
+                                 constrainted: { $0.edges.pinToSafeArea(of: self) },
+                                 subhierarchy: [
+                                  ViewHierarchy.complex(scrollView,
+                                                        constrainted: { $0.edges.pinToSuperview() },
+                                                        subhierarchy: )
+      ])
+      
+//      .plain(scrollView) {
+//
+//    }
+  }
+  
+  
+}
 

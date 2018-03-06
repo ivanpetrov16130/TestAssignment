@@ -24,10 +24,18 @@ class InstitutionsModule: Module {
   
   let servicesContainer: Container
   
-  private(set) lazy var viewModelsContainer: Container = {
+  private(set) lazy var interactorsContainer: Container = {
     let container = Container(parent: servicesContainer)
+    container.register(InstitutionsInteractor.self) { resolver in
+      InstitutionsInteractor(holderModule: self, provider: resolver.resolve(InstitutionsProvider.self)!) //TODO: fix force unwrap
+    }
+    return container
+  }()
+  
+  private(set) lazy var viewModelsContainer: Container = {
+    let container = Container(parent: interactorsContainer)
     container.register(InstitutionsViewModel.self) { resolver in
-      InstitutionsViewModel(holderModule: self, provider: resolver.resolve(InstitutionsProvider.self)!) //TODO: fix force unwrap
+      InstitutionsViewModel(interactor: resolver.resolve(InstitutionsInteractor.self)!) //TODO: fix force unwrap
     }
     return container
   }()
@@ -35,7 +43,7 @@ class InstitutionsModule: Module {
   private(set) lazy var viewsContainer: Container = {
     let container = Container(parent: viewModelsContainer)
     container.register(InstitutionsViewController.self) { resolver in
-      InstitutionsViewController(viewModel: resolver.resolve(InstitutionsViewModel.self)!) //TODO: fix force unwrap
+      InstitutionsViewController(interactor: resolver.resolve(InstitutionsInteractor.self)!, viewModel: resolver.resolve(InstitutionsViewModel.self)!) //TODO: fix force unwrap
     }
     return container
   }()

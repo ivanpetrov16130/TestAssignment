@@ -13,7 +13,7 @@ enum InstitutionsViewStyles {
   
   static let institutions = Style<UITableView> {
     $0.separatorStyle = .none
-    $0.backgroundColor = .white
+    $0.backgroundColor = .red
     $0.register(reusableCellClass: InstitutionCell.self)
   }
   

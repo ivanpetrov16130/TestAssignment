@@ -20,9 +20,11 @@
 		2CF9F18E20487B610070679C /* ApplicationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F18D20487B610070679C /* ApplicationFlow.swift */; };
 		2CF9F190204885F40070679C /* InstitutionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F18F204885F40070679C /* InstitutionDetailsViewController.swift */; };
 		2CF9F1922048869B0070679C /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F1912048869B0070679C /* Common.swift */; };
-		2CF9F19720488A3A0070679C /* InstitutionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F19620488A3A0070679C /* InstitutionsViewModel.swift */; };
-		2CF9F19920488AC20070679C /* InstitutionDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F19820488AC20070679C /* InstitutionDetailsViewModel.swift */; };
+		2CF9F19720488A3A0070679C /* InstitutionsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F19620488A3A0070679C /* InstitutionsInteractor.swift */; };
+		2CF9F19920488AC20070679C /* InstitutionDetailsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F19820488AC20070679C /* InstitutionDetailsInteractor.swift */; };
 		3F7FC527E064B0E7B6BF1664 /* Pods_TestAssignment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DC5FD266AF9E9E94B24E769 /* Pods_TestAssignment.framework */; };
+		446A7180204E5C7A00B9CE18 /* InstitutionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446A717F204E5C7A00B9CE18 /* InstitutionsViewModel.swift */; };
+		446A7182204E5FCB00B9CE18 /* InstitutionDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 446A7181204E5FCB00B9CE18 /* InstitutionDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,8 +44,10 @@
 		2CF9F18D20487B610070679C /* ApplicationFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationFlow.swift; sourceTree = "<group>"; };
 		2CF9F18F204885F40070679C /* InstitutionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionDetailsViewController.swift; sourceTree = "<group>"; };
 		2CF9F1912048869B0070679C /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
-		2CF9F19620488A3A0070679C /* InstitutionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionsViewModel.swift; sourceTree = "<group>"; };
-		2CF9F19820488AC20070679C /* InstitutionDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionDetailsViewModel.swift; sourceTree = "<group>"; };
+		2CF9F19620488A3A0070679C /* InstitutionsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionsInteractor.swift; sourceTree = "<group>"; };
+		2CF9F19820488AC20070679C /* InstitutionDetailsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionDetailsInteractor.swift; sourceTree = "<group>"; };
+		446A717F204E5C7A00B9CE18 /* InstitutionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionsViewModel.swift; sourceTree = "<group>"; };
+		446A7181204E5FCB00B9CE18 /* InstitutionDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionDetailsViewModel.swift; sourceTree = "<group>"; };
 		6DC5FD266AF9E9E94B24E769 /* Pods_TestAssignment.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestAssignment.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9D4BDDA28BEBC3488E6E0F40 /* Pods-TestAssignment.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestAssignment.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestAssignment/Pods-TestAssignment.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -149,8 +153,9 @@
 			isa = PBXGroup;
 			children = (
 				2C8CD4C6204AEF5C007F2F03 /* InstitutionsModule.swift */,
+				2CF9F19620488A3A0070679C /* InstitutionsInteractor.swift */,
+				446A717F204E5C7A00B9CE18 /* InstitutionsViewModel.swift */,
 				2CF9F17D20486C860070679C /* InstitutionsViewController.swift */,
-				2CF9F19620488A3A0070679C /* InstitutionsViewModel.swift */,
 				2C054D45204C60D90075D319 /* InstitutionsViews.swift */,
 			);
 			path = Institutions;
@@ -160,8 +165,9 @@
 			isa = PBXGroup;
 			children = (
 				2C8CD4C8204AF445007F2F03 /* InstitutionDetailsModule.swift */,
+				2CF9F19820488AC20070679C /* InstitutionDetailsInteractor.swift */,
+				446A7181204E5FCB00B9CE18 /* InstitutionDetailsViewModel.swift */,
 				2CF9F18F204885F40070679C /* InstitutionDetailsViewController.swift */,
-				2CF9F19820488AC20070679C /* InstitutionDetailsViewModel.swift */,
 			);
 			path = InstitutionDetails;
 			sourceTree = "<group>";
@@ -315,16 +321,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C8CD4CC204B2517007F2F03 /* Networking.swift in Sources */,
+				446A7182204E5FCB00B9CE18 /* InstitutionDetailsViewModel.swift in Sources */,
 				2CF9F190204885F40070679C /* InstitutionDetailsViewController.swift in Sources */,
 				2CF9F17E20486C860070679C /* InstitutionsViewController.swift in Sources */,
-				2CF9F19920488AC20070679C /* InstitutionDetailsViewModel.swift in Sources */,
+				2CF9F19920488AC20070679C /* InstitutionDetailsInteractor.swift in Sources */,
 				2C054D46204C60D90075D319 /* InstitutionsViews.swift in Sources */,
 				2CF9F18E20487B610070679C /* ApplicationFlow.swift in Sources */,
 				2CF9F1922048869B0070679C /* Common.swift in Sources */,
 				2C054D42204C155F0075D319 /* Models.swift in Sources */,
 				2CF9F17C20486C860070679C /* AppDelegate.swift in Sources */,
 				2C8CD4C7204AEF5C007F2F03 /* InstitutionsModule.swift in Sources */,
-				2CF9F19720488A3A0070679C /* InstitutionsViewModel.swift in Sources */,
+				2CF9F19720488A3A0070679C /* InstitutionsInteractor.swift in Sources */,
+				446A7180204E5C7A00B9CE18 /* InstitutionsViewModel.swift in Sources */,
 				2C8CD4CF204B363E007F2F03 /* Module.swift in Sources */,
 				2C8CD4C9204AF445007F2F03 /* InstitutionDetailsModule.swift in Sources */,
 			);

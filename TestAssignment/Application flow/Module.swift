@@ -23,6 +23,7 @@ protocol Module: class {
   associatedtype OutcomeData
   
   var servicesContainer: Container { get }
+  var interactorsContainer: Container { get }
   var viewModelsContainer: Container { get }
   var viewsContainer: Container { get }
   weak var applicationFlow: ApplicationFlow? { get }

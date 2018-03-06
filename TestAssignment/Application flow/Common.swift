@@ -10,7 +10,7 @@ import UIKit
 import class RxCocoa.BehaviorRelay
 import Yalta
 
-protocol BasicViewModel {
+protocol BasicInteractor {
   
   associatedtype View: BasicView
   associatedtype State
@@ -21,42 +21,44 @@ protocol BasicViewModel {
   var viewStatesReactionQueue: DispatchQueue { get }
   var state: ObservableState { get }
 
-  func viewModelState(for viewState: View.State)
+  func state(for viewState: View.State)
   
   static var newViewStatesReactionQueue: DispatchQueue { get }
 
 }
 
-extension BasicViewModel {
+extension BasicInteractor {
   
   static var newViewStatesReactionQueue: DispatchQueue {
     return DispatchQueue(label: "ru.motmom.testassigment.\(String(describing: Self.self))", qos: DispatchQoS.userInteractive)
   }
   
-  func updateViewModelState(for viewState: View.State) {
-    viewStatesReactionQueue.sync { self.viewModelState(for: viewState) }
+  func computeState(for viewState: View.State) {
+    viewStatesReactionQueue.sync { self.state(for: viewState) }
   }
   
 }
 
 
 protocol BasicView: class {
+  associatedtype Interactor: BasicInteractor
   associatedtype ViewModel: BasicViewModel
   associatedtype State
   
+  var interactor: Interactor { get }
   var viewModel: ViewModel { get }
   
-  init(viewModel: ViewModel)
+  init(interactor: Interactor, viewModel: ViewModel)
   
 }
 
-//extension BasicView where Self: UIViewController {
-////  init(viewModel: ViewModel) {
-////    self.viewModel = viewModel
-////    
-////  }
-//
-//}
+
+protocol BasicViewModel: class {
+  associatedtype View: BasicView
+  var interactor: View.Interactor { get }
+  
+  init(interactor: View.Interactor)
+}
 
 
 protocol Reusable {

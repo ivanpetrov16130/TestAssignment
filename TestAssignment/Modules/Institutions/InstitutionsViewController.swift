@@ -17,15 +17,18 @@ class InstitutionsViewController: UIViewController, BasicView, Alertable {
     case institutionDidSelected(atIndex: Int)
   }
   
+  typealias Interactor = InstitutionsInteractor
   typealias ViewModel = InstitutionsViewModel
   
+  let interactor: Interactor
   let viewModel: ViewModel
   let disposeBag = DisposeBag()
   
   let institutionsView: UITableView = UITableView(frame: .zero, style: .plain).styled(with: InstitutionsViewStyles.institutions)
   let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
   
-  required init(viewModel: InstitutionsViewModel) {
+  required init(interactor: InstitutionsInteractor, viewModel: InstitutionsViewModel) {
+    self.interactor = interactor
     self.viewModel = viewModel
 
     super.init(nibName: nil, bundle: nil)
@@ -42,36 +45,28 @@ class InstitutionsViewController: UIViewController, BasicView, Alertable {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    viewModel.updateViewModelState(for: .viewDidLoad)
     
-    viewModel.state.subscribe(onNext: { [unowned self] state in
-      switch state {
-      case .loadingInstitutions:
-        self.activityIndicator.startAnimating()
-      case .loaded(institutions: let institutions):
-        self.activityIndicator.stopAnimating()
-        Observable.just(institutions).bind(to: self.institutionsView.rx.items(cellIdentifier: InstitutionCell.reuseId, cellType: InstitutionCell.self)) {
-          index, institution, institutionCell in
-          institutionCell.nameLabel.text = institution.name
-          institutionCell.descriptionLabel.text = institution.introDescription
-          institutionCell.ratingLabel.text = "\(institution.rating)"
-        }
-        .disposed(by: self.disposeBag)
-        self.institutionsView.reloadData()
-      case .failedLoading(error: let error):
-        self.activityIndicator.stopAnimating()
-        self.alert(about: error)
-      default:
-        self.activityIndicator.stopAnimating()
+    viewModel.institutionsDataSource
+      .bind(to: institutionsView.rx.items(cellIdentifier: InstitutionCell.reuseId, cellType: InstitutionCell.self)) {
+        index, institution, cell in
+        cell.nameLabel.text = institution.name
+        cell.descriptionLabel.text = institution.introDescription
+        cell.ratingLabel.text = "\(institution.rating)"
       }
-    })
-    .disposed(by: disposeBag)
+      .disposed(by: disposeBag)
+    
+    institutionsView.rx.itemSelected
+      .subscribe(onNext: { [unowned self] indexPath in
+        self.interactor.computeState(for: .institutionDidSelected(atIndex: indexPath.row))
+      })
+      .disposed(by: disposeBag)
+    
+    viewModel.isActivityIndicatorActive
+      .bind(to: activityIndicator.rx.isAnimating)
+      .disposed(by: disposeBag)
+    
+    interactor.computeState(for: .viewDidLoad)
   }
-  
-//  @objc func btnTapped() {
-//    viewModel.updateViewModelState(for: .institutionDidSelected(atIndex: 0))
-//  }
-  
 
 }
 
