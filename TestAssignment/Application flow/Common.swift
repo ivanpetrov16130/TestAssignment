@@ -118,43 +118,28 @@ extension Alertable where Self: UIViewController {
 }
 
 
-
 enum ViewHierarchy {
   
-  typealias ContraintsApplicator = (LayoutProxy<UIView>) -> Void
+  case view(UIView, subhierarchy: [ViewHierarchy]?)
   
-  case rootless(subhierarchy: [ViewHierarchy])
-  case plain(UIView, constrainted: ContraintsApplicator)
-  case complex(UIView, constrainted: ContraintsApplicator, subhierarchy: [ViewHierarchy])
-  
-  func build(in superview: UIView) {
+  private func build(in superview: UIView) {
     switch self {
-    case .rootless(subhierarchy: let subhierarchy):
-      subhierarchy.forEach{ $0.build(in: superview) }
-    case .plain(let view, constrainted: _):
+    case .view(let view, subhierarchy: let subhierarchy):
       superview.addSubview(view)
-    case .complex(let view, constrainted: _, subhierarchy: let subhierarchy):
-      superview.addSubview(view)
-      subhierarchy.forEach{ $0.build(in: view) }
+      subhierarchy?.forEach{ $0.build(in: view) }
     }
   }
   
-  var constraintApplicators: [(view: UIView, constrainted: ContraintsApplicator)] {
-    switch self {
-    case .rootless(subhierarchy: let subhierarchy):
-      return subhierarchy.flatMap { $0.constraintApplicators }
-    case .plain(let view, constrainted: let constraintsApplicator):
-      return [(view: view, constrainted: constraintsApplicator)]
-    case .complex(let view, constrainted: let constraintsApplicator, subhierarchy: let subhierarchy):
-      return subhierarchy.flatMap { $0.constraintApplicators } + [(view: view, constrainted: constraintsApplicator)]
-    }
-  }
+  func build() { switch self { case .view(let view, subhierarchy: let subhierarchy): subhierarchy?.forEach{ $0.build(in: view) } } }
   
 }
+
 
 protocol Autolayouted {
   
   var viewHierarchy: ViewHierarchy { get }
+  
+  var autolayoutConstraints: Yalta.Constraints { get }
   
   func buildViewHierarchyWithConstraints()
   
@@ -162,28 +147,15 @@ protocol Autolayouted {
 
 extension Autolayouted {
   
-  fileprivate func buildViewHierarchyWithConstraints(in view: UIView) {
-    let viewHierarchy = self.viewHierarchy
-    viewHierarchy.build(in: view)
-    viewHierarchy.constraintApplicators.forEach{ $0.constrainted($0.view.al) }
+  func buildViewHierarchyWithConstraints() {
+    viewHierarchy.build()
+    _ = autolayoutConstraints
   }
   
 }
 
-extension Autolayouted where Self: UIViewController {
-  func buildViewHierarchyWithConstraints() { buildViewHierarchyWithConstraints(in: view) }
+extension Yalta.Constraints {
+  @discardableResult public convenience init<A: LayoutItem, B: LayoutItem, C: LayoutItem, D: LayoutItem, E: LayoutItem, F: LayoutItem, G: LayoutItem, H: LayoutItem, I: LayoutItem>(for a: A, _ b: B, _ c: C, _ d: D, _ e: E, _ f: F, _ g: G, _ h: H, _ i: I, _ closure: (LayoutProxy<A>, LayoutProxy<B>, LayoutProxy<C>, LayoutProxy<D>, LayoutProxy<E>, LayoutProxy<F>, LayoutProxy<G>, LayoutProxy<H>, LayoutProxy<I>) -> Void) {
+    self.init { closure(a.al, b.al, c.al, d.al, e.al, f.al, g.al, h.al, i.al) }
+  }
 }
-
-extension Autolayouted where Self: UITableViewCell {
-  func buildViewHierarchyWithConstraints() { buildViewHierarchyWithConstraints(in: contentView) }
-}
-
-extension Autolayouted where Self: UICollectionViewCell {
-  func buildViewHierarchyWithConstraints() { buildViewHierarchyWithConstraints(in: contentView) }
-}
-
-extension Autolayouted where Self: UIView {
-  func buildViewHierarchyWithConstraints() { buildViewHierarchyWithConstraints(in: self) }
-}
-
-

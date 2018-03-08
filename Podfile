@@ -10,4 +10,5 @@ target 'TestAssignment' do
 	pod 'Moya/RxSwift'
 	pod 'Swinject'
   pod 'Yalta'
+  pod 'Kingfisher'
 end

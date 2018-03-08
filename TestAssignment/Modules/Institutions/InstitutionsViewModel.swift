@@ -19,7 +19,6 @@ class InstitutionsViewModel: BasicViewModel {
   let isActivityIndicatorActive: BehaviorRelay<Bool> = BehaviorRelay(value: false)
   let institutionsDataSource: BehaviorRelay<[Institution]> = BehaviorRelay(value: [])
   let errorDataSource: BehaviorRelay<Error?> = BehaviorRelay(value: nil)
-  let isErrorAlertActive: BehaviorRelay<Bool> = BehaviorRelay(value: false)
   
   required init(interactor: View.Interactor) {
     self.interactor = interactor
@@ -28,10 +27,12 @@ class InstitutionsViewModel: BasicViewModel {
       switch state {
       case .loadingInstitutions:
         self.isActivityIndicatorActive.accept(true)
+        self.errorDataSource.accept(nil)
       case .loaded(institutions: let institutions):
         self.isActivityIndicatorActive.accept(false)
+        self.errorDataSource.accept(nil)
         self.institutionsDataSource.accept(institutions)
-      case .failedLoading(error: let error):
+      case .failedLoadingInstitutions(error: let error):
         self.isActivityIndicatorActive.accept(false)
         self.errorDataSource.accept(error)
       default:

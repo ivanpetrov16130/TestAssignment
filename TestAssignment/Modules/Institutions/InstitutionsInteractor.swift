@@ -19,7 +19,7 @@ class InstitutionsInteractor: BasicInteractor {
     case initial
     case loadingInstitutions
     case loaded(institutions: [Institution])
-    case failedLoading(error: Error)
+    case failedLoadingInstitutions(error: Error)
     case noInstitutions
   }
   
@@ -48,11 +48,14 @@ class InstitutionsInteractor: BasicInteractor {
         .subscribe(onSuccess: { [unowned self] institutions in
           self.state.accept(.loaded(institutions: institutions))
         }) { [unowned self] (error) in
-          self.state.accept(.failedLoading(error: error))
+          self.state.accept(.failedLoadingInstitutions(error: error))
         }
         .disposed(by: disposeBag)
     case .institutionDidSelected(atIndex: let index):
-      holderModule?.finish(outcome: .finished(result: "id \(index)"))
+      if case let .loaded(institutions: institutions) = self.state.value,
+        institutions.endIndex > index, !(index < institutions.startIndex) {
+        holderModule?.finish(outcome: .finished(result: institutions[index].id))
+      }
     }
   }
 

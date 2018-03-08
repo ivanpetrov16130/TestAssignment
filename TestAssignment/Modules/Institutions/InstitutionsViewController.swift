@@ -24,8 +24,8 @@ class InstitutionsViewController: UIViewController, BasicView, Alertable {
   let viewModel: ViewModel
   let disposeBag = DisposeBag()
   
-  let institutionsView: UITableView = UITableView(frame: .zero, style: .plain).styled(with: InstitutionsViewStyles.institutions)
-  let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .white)
+  let institutionsView: UITableView = UITableView(frame: .zero, style: .plain).styled(with: InstitutionsViewStyle.institutions)
+  let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
   
   required init(interactor: InstitutionsInteractor, viewModel: InstitutionsViewModel) {
     self.interactor = interactor
@@ -65,14 +65,39 @@ class InstitutionsViewController: UIViewController, BasicView, Alertable {
       .bind(to: activityIndicator.rx.isAnimating)
       .disposed(by: disposeBag)
     
+    viewModel.errorDataSource
+      .observeOn(MainScheduler.instance)
+      .subscribe(onNext: { [unowned self] error in
+        if let error = error {
+          self.alert(about: error)
+        } else {
+          self.presentedViewController?.dismiss(animated: true) // TODO: check if works
+        }
+      })
+      .disposed(by: disposeBag)
+    
     interactor.computeState(for: .viewDidLoad)
   }
 
 }
 
-extension InstitutionsViewController: Autolayouted {
+extension InstitutionsViewController: Autolayouted {  
+  
   var viewHierarchy: ViewHierarchy {
-    return ViewHierarchy.plain(institutionsView, constrainted: { $0.edges.pinToSafeArea(of: self) } )
+    return .view(view,
+                 subhierarchy: [
+                  .view(institutionsView, subhierarchy: nil),
+                  .view(activityIndicator, subhierarchy: nil)
+      ]
+    )
   }
+  
+  var autolayoutConstraints: Constraints {
+    return Constraints(for: institutionsView, activityIndicator) {
+      $0.edges.pinToSafeArea(of: self)
+      $1.center.alignWithSuperview()
+    }
+  }
+  
 }
 

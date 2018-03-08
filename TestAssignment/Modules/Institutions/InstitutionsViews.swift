@@ -7,13 +7,16 @@
 //
 
 import UIKit
+import Yalta
 //import RxCocoa
 
-enum InstitutionsViewStyles {
+enum InstitutionsViewStyle {
   
   static let institutions = Style<UITableView> {
     $0.separatorStyle = .none
     $0.backgroundColor = .red
+    $0.estimatedRowHeight = 80
+    $0.rowHeight = UITableViewAutomaticDimension
     $0.register(reusableCellClass: InstitutionCell.self)
   }
   
@@ -36,9 +39,9 @@ enum InstitutionsViewStyles {
 
 class InstitutionCell: UITableViewCell {
   
-  let nameLabel = UILabel().styled(with: InstitutionsViewStyles.institutionName)
-  let descriptionLabel = UILabel().styled(with: InstitutionsViewStyles.institutionIntro)
-  let ratingLabel = UILabel().styled(with: InstitutionsViewStyles.institutionRating)
+  let nameLabel = UILabel().styled(with: InstitutionsViewStyle.institutionName)
+  let descriptionLabel = UILabel().styled(with: InstitutionsViewStyle.institutionIntro)
+  let ratingLabel = UILabel().styled(with: InstitutionsViewStyle.institutionRating)
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -52,25 +55,26 @@ class InstitutionCell: UITableViewCell {
 }
 
 extension InstitutionCell: Autolayouted {
+
   var viewHierarchy: ViewHierarchy {
-    return ViewHierarchy.rootless(subhierarchy:
-      [ViewHierarchy.plain(nameLabel,
-                           constrainted: {
-                             $0.edges(.left, .top, .right).pinToSuperview(insets: UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16))
-                          }),
-       ViewHierarchy.plain(descriptionLabel,
-                           constrainted: {
-                            $0.edges(.left, .right).pinToSuperview(insets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
-                            $0.top.align(with: self.nameLabel.al.bottom)
-                          }),
-       ViewHierarchy.plain(ratingLabel,
-                           constrainted: {
-                            $0.top.align(with: self.descriptionLabel.al.bottom)
-                            $0.edges(.left, .bottom).pinToSuperview()
-       })
-      ]
-    )
+    return .view(contentView,
+                 subhierarchy: [
+                  .view(nameLabel, subhierarchy: nil),
+                  .view(descriptionLabel, subhierarchy: nil),
+                  .view(ratingLabel, subhierarchy: nil)
+      ])
   }
-  
+    
+  var autolayoutConstraints: Constraints {
+    return Constraints(for: nameLabel, descriptionLabel, ratingLabel) {
+      $0.edges(.left, .top, .right).pinToSuperview(insets: UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16))
+      
+      $1.edges(.left, .right).pinToSuperview(insets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
+      $1.top.align(with: $0.bottom)
+      
+      $2.top.align(with: $1.bottom).priority = UILayoutPriority(rawValue: 749)
+      $2.edges(.left, .bottom).pinToSuperview()
+    }
+  }
   
 }

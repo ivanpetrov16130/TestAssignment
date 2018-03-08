@@ -13,6 +13,7 @@
 		2C8CD4C9204AF445007F2F03 /* InstitutionDetailsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8CD4C8204AF445007F2F03 /* InstitutionDetailsModule.swift */; };
 		2C8CD4CC204B2517007F2F03 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8CD4CB204B2517007F2F03 /* Networking.swift */; };
 		2C8CD4CF204B363E007F2F03 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8CD4CE204B363E007F2F03 /* Module.swift */; };
+		2CDCC40E2051B603003A5966 /* InstitutionDetailsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCC40D2051B603003A5966 /* InstitutionDetailsViews.swift */; };
 		2CF9F17C20486C860070679C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F17B20486C860070679C /* AppDelegate.swift */; };
 		2CF9F17E20486C860070679C /* InstitutionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F17D20486C860070679C /* InstitutionsViewController.swift */; };
 		2CF9F18320486C860070679C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2CF9F18220486C860070679C /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 		2C8CD4C8204AF445007F2F03 /* InstitutionDetailsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionDetailsModule.swift; sourceTree = "<group>"; };
 		2C8CD4CB204B2517007F2F03 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
 		2C8CD4CE204B363E007F2F03 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
+		2CDCC40D2051B603003A5966 /* InstitutionDetailsViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionDetailsViews.swift; sourceTree = "<group>"; };
 		2CF9F17820486C860070679C /* TestAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CF9F17B20486C860070679C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2CF9F17D20486C860070679C /* InstitutionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionsViewController.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				2CF9F19820488AC20070679C /* InstitutionDetailsInteractor.swift */,
 				446A7181204E5FCB00B9CE18 /* InstitutionDetailsViewModel.swift */,
 				2CF9F18F204885F40070679C /* InstitutionDetailsViewController.swift */,
+				2CDCC40D2051B603003A5966 /* InstitutionDetailsViews.swift */,
 			);
 			path = InstitutionDetails;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-TestAssignment/Pods-TestAssignment-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/Moya/Moya.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
@@ -286,6 +290,7 @@
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Moya.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
@@ -326,6 +331,7 @@
 				2CF9F17E20486C860070679C /* InstitutionsViewController.swift in Sources */,
 				2CF9F19920488AC20070679C /* InstitutionDetailsInteractor.swift in Sources */,
 				2C054D46204C60D90075D319 /* InstitutionsViews.swift in Sources */,
+				2CDCC40E2051B603003A5966 /* InstitutionDetailsViews.swift in Sources */,
 				2CF9F18E20487B610070679C /* ApplicationFlow.swift in Sources */,
 				2CF9F1922048869B0070679C /* Common.swift in Sources */,
 				2C054D42204C155F0075D319 /* Models.swift in Sources */,
