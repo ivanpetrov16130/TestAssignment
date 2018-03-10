@@ -12,7 +12,7 @@ import RxSwift
 
 class InstitutionsViewController: UIViewController, BasicView, Alertable {
   
-  enum State {
+  enum Event {
     case viewDidLoad
     case institutionDidSelected(atIndex: Int)
   }

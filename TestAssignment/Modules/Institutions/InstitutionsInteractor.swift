@@ -36,7 +36,7 @@ class InstitutionsInteractor: BasicInteractor {
     self.provider = provider
   }
   
-  func state(for viewState: View.State) {
+  func state(for viewState: View.Event) {
     switch viewState {
     case .viewDidLoad:
       state.accept(.loadingInstitutions)

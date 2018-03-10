@@ -9,10 +9,13 @@
 /* Begin PBXBuildFile section */
 		2C054D42204C155F0075D319 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C054D41204C155F0075D319 /* Models.swift */; };
 		2C054D46204C60D90075D319 /* InstitutionsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C054D45204C60D90075D319 /* InstitutionsViews.swift */; };
+		2C4158BE20546C13006BC8F8 /* AutoLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4158BD20546C13006BC8F8 /* AutoLayout.swift */; };
+		2C4158C020546C40006BC8F8 /* ViewStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4158BF20546C40006BC8F8 /* ViewStyling.swift */; };
+		2C4158C220546C97006BC8F8 /* UIKit Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4158C120546C97006BC8F8 /* UIKit Extensions.swift */; };
 		2C8CD4C7204AEF5C007F2F03 /* InstitutionsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8CD4C6204AEF5C007F2F03 /* InstitutionsModule.swift */; };
 		2C8CD4C9204AF445007F2F03 /* InstitutionDetailsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8CD4C8204AF445007F2F03 /* InstitutionDetailsModule.swift */; };
 		2C8CD4CC204B2517007F2F03 /* Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8CD4CB204B2517007F2F03 /* Networking.swift */; };
-		2C8CD4CF204B363E007F2F03 /* Module.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8CD4CE204B363E007F2F03 /* Module.swift */; };
+		2C8CD4CF204B363E007F2F03 /* Architecture components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8CD4CE204B363E007F2F03 /* Architecture components.swift */; };
 		2CDCC40E2051B603003A5966 /* InstitutionDetailsViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDCC40D2051B603003A5966 /* InstitutionDetailsViews.swift */; };
 		2CF9F17C20486C860070679C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F17B20486C860070679C /* AppDelegate.swift */; };
 		2CF9F17E20486C860070679C /* InstitutionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F17D20486C860070679C /* InstitutionsViewController.swift */; };
@@ -20,7 +23,6 @@
 		2CF9F18620486C860070679C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2CF9F18420486C860070679C /* LaunchScreen.storyboard */; };
 		2CF9F18E20487B610070679C /* ApplicationFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F18D20487B610070679C /* ApplicationFlow.swift */; };
 		2CF9F190204885F40070679C /* InstitutionDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F18F204885F40070679C /* InstitutionDetailsViewController.swift */; };
-		2CF9F1922048869B0070679C /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F1912048869B0070679C /* Common.swift */; };
 		2CF9F19720488A3A0070679C /* InstitutionsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F19620488A3A0070679C /* InstitutionsInteractor.swift */; };
 		2CF9F19920488AC20070679C /* InstitutionDetailsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF9F19820488AC20070679C /* InstitutionDetailsInteractor.swift */; };
 		3F7FC527E064B0E7B6BF1664 /* Pods_TestAssignment.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DC5FD266AF9E9E94B24E769 /* Pods_TestAssignment.framework */; };
@@ -32,10 +34,13 @@
 		0B9EE3A64DB55F115E51B3A9 /* Pods-TestAssignment.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestAssignment.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TestAssignment/Pods-TestAssignment.debug.xcconfig"; sourceTree = "<group>"; };
 		2C054D41204C155F0075D319 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		2C054D45204C60D90075D319 /* InstitutionsViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionsViews.swift; sourceTree = "<group>"; };
+		2C4158BD20546C13006BC8F8 /* AutoLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoLayout.swift; sourceTree = "<group>"; };
+		2C4158BF20546C40006BC8F8 /* ViewStyling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewStyling.swift; sourceTree = "<group>"; };
+		2C4158C120546C97006BC8F8 /* UIKit Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIKit Extensions.swift"; sourceTree = "<group>"; };
 		2C8CD4C6204AEF5C007F2F03 /* InstitutionsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionsModule.swift; sourceTree = "<group>"; };
 		2C8CD4C8204AF445007F2F03 /* InstitutionDetailsModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionDetailsModule.swift; sourceTree = "<group>"; };
 		2C8CD4CB204B2517007F2F03 /* Networking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networking.swift; sourceTree = "<group>"; };
-		2C8CD4CE204B363E007F2F03 /* Module.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Module.swift; sourceTree = "<group>"; };
+		2C8CD4CE204B363E007F2F03 /* Architecture components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Architecture components.swift"; sourceTree = "<group>"; };
 		2CDCC40D2051B603003A5966 /* InstitutionDetailsViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionDetailsViews.swift; sourceTree = "<group>"; };
 		2CF9F17820486C860070679C /* TestAssignment.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestAssignment.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2CF9F17B20486C860070679C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,7 +50,6 @@
 		2CF9F18720486C860070679C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2CF9F18D20487B610070679C /* ApplicationFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationFlow.swift; sourceTree = "<group>"; };
 		2CF9F18F204885F40070679C /* InstitutionDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionDetailsViewController.swift; sourceTree = "<group>"; };
-		2CF9F1912048869B0070679C /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		2CF9F19620488A3A0070679C /* InstitutionsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionsInteractor.swift; sourceTree = "<group>"; };
 		2CF9F19820488AC20070679C /* InstitutionDetailsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionDetailsInteractor.swift; sourceTree = "<group>"; };
 		446A717F204E5C7A00B9CE18 /* InstitutionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstitutionsViewModel.swift; sourceTree = "<group>"; };
@@ -102,11 +106,20 @@
 		2C8CD4CD204B3627007F2F03 /* Application flow */ = {
 			isa = PBXGroup;
 			children = (
-				2CF9F1912048869B0070679C /* Common.swift */,
-				2C8CD4CE204B363E007F2F03 /* Module.swift */,
 				2CF9F18D20487B610070679C /* ApplicationFlow.swift */,
 			);
 			path = "Application flow";
+			sourceTree = "<group>";
+		};
+		2CE2A452205479EB00FE577D /* AppCore */ = {
+			isa = PBXGroup;
+			children = (
+				2C4158C120546C97006BC8F8 /* UIKit Extensions.swift */,
+				2C4158BF20546C40006BC8F8 /* ViewStyling.swift */,
+				2C4158BD20546C13006BC8F8 /* AutoLayout.swift */,
+				2C8CD4CE204B363E007F2F03 /* Architecture components.swift */,
+			);
+			path = AppCore;
 			sourceTree = "<group>";
 		};
 		2CF9F16F20486C860070679C = {
@@ -130,6 +143,7 @@
 		2CF9F17A20486C860070679C /* TestAssignment */ = {
 			isa = PBXGroup;
 			children = (
+				2CE2A452205479EB00FE577D /* AppCore */,
 				2C054D40204C14F90075D319 /* Models */,
 				2C8CD4CD204B3627007F2F03 /* Application flow */,
 				2C8CD4CA204B2500007F2F03 /* Services */,
@@ -326,20 +340,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C8CD4CC204B2517007F2F03 /* Networking.swift in Sources */,
+				2C4158C220546C97006BC8F8 /* UIKit Extensions.swift in Sources */,
 				446A7182204E5FCB00B9CE18 /* InstitutionDetailsViewModel.swift in Sources */,
 				2CF9F190204885F40070679C /* InstitutionDetailsViewController.swift in Sources */,
 				2CF9F17E20486C860070679C /* InstitutionsViewController.swift in Sources */,
 				2CF9F19920488AC20070679C /* InstitutionDetailsInteractor.swift in Sources */,
 				2C054D46204C60D90075D319 /* InstitutionsViews.swift in Sources */,
 				2CDCC40E2051B603003A5966 /* InstitutionDetailsViews.swift in Sources */,
+				2C4158C020546C40006BC8F8 /* ViewStyling.swift in Sources */,
 				2CF9F18E20487B610070679C /* ApplicationFlow.swift in Sources */,
-				2CF9F1922048869B0070679C /* Common.swift in Sources */,
 				2C054D42204C155F0075D319 /* Models.swift in Sources */,
 				2CF9F17C20486C860070679C /* AppDelegate.swift in Sources */,
 				2C8CD4C7204AEF5C007F2F03 /* InstitutionsModule.swift in Sources */,
 				2CF9F19720488A3A0070679C /* InstitutionsInteractor.swift in Sources */,
 				446A7180204E5C7A00B9CE18 /* InstitutionsViewModel.swift in Sources */,
-				2C8CD4CF204B363E007F2F03 /* Module.swift in Sources */,
+				2C4158BE20546C13006BC8F8 /* AutoLayout.swift in Sources */,
+				2C8CD4CF204B363E007F2F03 /* Architecture components.swift in Sources */,
 				2C8CD4C9204AF445007F2F03 /* InstitutionDetailsModule.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

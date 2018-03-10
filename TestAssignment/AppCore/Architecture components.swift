@@ -8,6 +8,60 @@
 
 import UIKit
 import Swinject
+import class RxCocoa.BehaviorRelay
+
+
+protocol BasicInteractor {
+  
+  associatedtype View: BasicView
+  associatedtype State
+  associatedtype HolderModule: Module
+  typealias ObservableState = BehaviorRelay<State>
+  
+  weak var holderModule: HolderModule? { get }
+  var viewStatesReactionQueue: DispatchQueue { get }
+  var state: ObservableState { get }
+  
+  func state(for viewState: View.Event)
+  
+  static var newViewStatesReactionQueue: DispatchQueue { get }
+  
+}
+
+extension BasicInteractor {
+  
+  static var newViewStatesReactionQueue: DispatchQueue {
+    return DispatchQueue(label: "ru.motmom.testassigment.\(String(describing: Self.self))", qos: DispatchQoS.userInteractive)
+  }
+  
+  func computeState(for viewState: View.Event) {
+    viewStatesReactionQueue.sync { self.state(for: viewState) }
+  }
+  
+}
+
+
+protocol BasicView: class {
+  associatedtype Interactor: BasicInteractor
+  associatedtype ViewModel: BasicViewModel
+  associatedtype Event
+  
+  var interactor: Interactor { get }
+  var viewModel: ViewModel { get }
+  
+  init(interactor: Interactor, viewModel: ViewModel)
+  
+}
+
+
+protocol BasicViewModel: class {
+  associatedtype View: BasicView
+  var interactor: View.Interactor { get }
+  
+  init(interactor: View.Interactor)
+}
+
+
 
 enum ModuleOutcome<T> {
   case cancelled

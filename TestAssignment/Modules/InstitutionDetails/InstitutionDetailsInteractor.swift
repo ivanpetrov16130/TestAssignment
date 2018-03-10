@@ -38,7 +38,7 @@ class InstitutionDetailsInteractor: BasicInteractor {
     self.institutionId = institutionId
   }
   
-  func state(for viewState: View.State) {
+  func state(for viewState: View.Event) {
     switch viewState {
     case .viewDidLoad:
       state.accept(.loadingInstitutionDetails)

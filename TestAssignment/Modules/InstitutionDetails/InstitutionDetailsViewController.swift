@@ -15,7 +15,7 @@ class InstitutionDetailsViewController: UIViewController, BasicView, Alertable {
   typealias Interactor = InstitutionDetailsInteractor
   typealias ViewModel  = InstitutionDetailsViewModel
   
-  enum State {
+  enum Event {
     case viewDidLoad
     case viewDidClose
     case mapDidOpenForAddress(at: Int)
