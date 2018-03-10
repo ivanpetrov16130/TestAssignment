@@ -66,6 +66,7 @@ extension InstitutionCell: Autolayouted {
   }
     
   var autolayoutConstraints: Constraints {
+    ratingLabel.setContentHuggingPriority(UILayoutPriority.defaultLow, for: .vertical)
     return Constraints(for: nameLabel, descriptionLabel, ratingLabel) {
       $0.edges(.left, .top, .right).pinToSuperview(insets: UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16))
       
@@ -73,7 +74,7 @@ extension InstitutionCell: Autolayouted {
       $1.top.align(with: $0.bottom)
       
       $2.top.align(with: $1.bottom).priority = UILayoutPriority(rawValue: 749)
-      $2.edges(.left, .bottom).pinToSuperview()
+      $2.edges(.left, .right, .bottom).pinToSuperview()
     }
   }
   

@@ -37,6 +37,8 @@ class InstitutionDetailsViewController: UIViewController, BasicView, Alertable {
   let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
   let addressesView: UITableView = UITableView(frame: .zero, style: .plain).styled(with: InstitutionDetailsStyle.addresses)
   
+  var addressesViewHeightConstraint: NSLayoutConstraint?
+  
   required init(interactor: InstitutionDetailsInteractor, viewModel: InstitutionDetailsViewModel) {
     self.interactor = interactor
     self.viewModel = viewModel
@@ -56,26 +58,23 @@ class InstitutionDetailsViewController: UIViewController, BasicView, Alertable {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    Observable.zip(// TODO: describe wtf is that
+      viewModel.institutionAddressesDataSource,
+      addressesView.rx.willDisplayCell.skipWhile{ $1.row < self.addressesView.numberOfRows(inSection: 0) - 1 }
+      )
+      .subscribe(onNext: { (_, _) in
+        self.addressesViewHeightConstraint?.isActive = false
+        self.addressesViewHeightConstraint = self.addressesView.al.height.set(self.addressesView.contentSize.height)
+        self.scrollView.layoutIfNeeded()
+      })
+      .disposed(by: disposeBag)
+    
     viewModel.institutionAddressesDataSource
       .bind(to: addressesView.rx.items(cellIdentifier: InstitutionAddressCell.reuseId, cellType: InstitutionAddressCell.self)) {
         [unowned self] index, address, cell in
         cell.addressLabel.text = address.address
         cell.timetableLabel.text = address.timetable
         cell.mapTransitionButton.rx.tap
-//          .do(onNext: { (_) in
-//            print("mb next")
-//          }, onError: { (error) in
-//            print("mb err \(error)")
-//          }, onCompleted: {
-//            print("mb compl")
-//          }, onSubscribe: {
-//            print("mb subscribe")
-//          }, onSubscribed: {
-//            print("mb subscriBED")
-//          }, onDispose: {
-//            print("mb disp")
-//          })
-          .debug()
           .subscribe(onNext: { _ in
             self.interactor.computeState(for: .mapDidOpenForAddress(at: index))
           })
@@ -113,12 +112,7 @@ class InstitutionDetailsViewController: UIViewController, BasicView, Alertable {
         }
       })
       .disposed(by: disposeBag)
-
-    addressesView.rx.didScroll
-      .subscribe(onNext: { _ in
-        print("did scroll")
-      })
-      .disposed(by: disposeBag)
+    
     
     closeButton.rx.tap
       .subscribe(onNext: { [unowned self] _ in
@@ -129,18 +123,14 @@ class InstitutionDetailsViewController: UIViewController, BasicView, Alertable {
     interactor.computeState(for: .viewDidLoad)
   }
   
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    print("viewdidappear")
-    print("sv mask \(scrollView.translatesAutoresizingMaskIntoConstraints)")
-  }
-  
 }
+
 
 extension InstitutionDetailsViewController: Autolayouted {
   var viewHierarchy: ViewHierarchy {
     return .view(view,
                  subhierarchy: [
+                  .view(closeButton, subhierarchy: nil),
                   .view(scrollView,
                         subhierarchy: [
                           .view(contentView,
@@ -152,41 +142,48 @@ extension InstitutionDetailsViewController: Autolayouted {
                                   .view(addressesView, subhierarchy: nil),
                                   .view(activityIndicator, subhierarchy: nil)
                             ])
-                    ]),
-                    .view(closeButton, subhierarchy: nil)
+                    ])
+                  
       ])
   }
   
   var autolayoutConstraints: Constraints {
     
+    view.bringSubview(toFront: closeButton)
+    
     return Constraints(for: closeButton, scrollView, contentView, imageView, nameLabel, ratingLabel, descriptionLabel, addressesView, activityIndicator) {
-      $0.edges(.left, .top).pinToSuperview()
-      $0.size.set(CGSize(width: 40, height: 40))
       
-      $1.edges.pinToSafeArea(of: self)
+      closeButton, scrollView, contentView, imageView, nameLabel, ratingLabel, descriptionLabel, addressesView, activityIndicator in
       
-      $2.top.pinToSuperview()
-      $2.left.pinToSuperview()
-      $2.width.match(view.al.width)
+      closeButton.left.align(with: imageView.left)
+      closeButton.top.align(with: imageView.top)
+      closeButton.size.set(CGSize(width: 40, height: 40))
       
-      $3.edges(.top, .left, .right).pinToSuperview()
-      $3.height.match(view.al.height, multiplier: 0.4)
+      scrollView.edges.pinToSafeArea(of: self)
       
-      $4.top.align(with: $3.bottom, offset: 16)
-      $4.edges(.left, .right).pinToSuperview()
+      contentView.width.match(view.al.width)
+      contentView.edges(.top, .left, .right).pinToSuperview()
       
-      $5.top.align(with: $4.bottom, offset: 8)
-      $5.edges(.left, .right).pinToSuperview()
+      imageView.edges(.top, .left, .right).pinToSuperview()
+      imageView.height.match(view.al.height, multiplier: 0.4)
       
-      $6.top.align(with: $5.bottom, offset: 8)
-      $6.edges(.left, .right).pinToSuperview()
+      nameLabel.top.align(with: imageView.bottom, offset: 16)
+      nameLabel.edges(.left, .right).pinToSuperview()
       
-      $7.top.align(with: $6.bottom, offset: 8).priority = UILayoutPriority(rawValue: 749)
-      $7.edges(.left, .right).pinToSuperview()
-      $7.height.match($1.height)
-      $7.bottom.align(with: $1.bottom, offset: -8)
+      ratingLabel.top.align(with: nameLabel.bottom, offset: 8)
+      ratingLabel.edges(.left, .right).pinToSuperview()
       
-      $8.center.align(with: view.al.center)
+      descriptionLabel.top.align(with: ratingLabel.bottom, offset: 8)
+      descriptionLabel.edges(.left, .right).pinToSuperview()
+      
+      addressesView.top.align(with: descriptionLabel.bottom, offset: 8)
+      addressesView.edges(.left, .right).pinToSuperview()
+      addressesViewHeightConstraint = addressesView.height.match(view.al.height)
+      addressesView.bottom.align(with: scrollView.bottom, offset: -8)
+      addressesView.bottom.pinToSuperview()
+      
+      activityIndicator.center.align(with: view.al.center)
+      
     }
     
   }

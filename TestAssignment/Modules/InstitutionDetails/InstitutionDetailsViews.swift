@@ -92,18 +92,19 @@ extension InstitutionAddressCell: Autolayouted {
   }
   
   var autolayoutConstraints: Constraints {
-    
+    timetableLabel.setContentHuggingPriority(UILayoutPriority(rawValue: 249), for: .vertical)
+    mapTransitionButton.setContentHuggingPriority(UILayoutPriority(rawValue: 248), for: .vertical)
     return Constraints(for: addressLabel, timetableLabel, mapTransitionButton) {
       $0.edges(.top, .left, .right).pinToSuperview(insets: UIEdgeInsets(top: 16, left: 16, bottom: 0, right: 16))
       
       $1.edges(.left, .right).pinToSuperview(insets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
       $1.top.align(with: $0.bottom, offset: 8)
       
-      $2.top.align(with: $1.bottom, offset: 8).priority = UILayoutPriority(rawValue: 749)
       $2.right.pinToSuperview(inset: 16)
-      $2.left.pinToSuperview(inset: 16, relation: .greaterThanOrEqual)
       $2.height.set(30)
       $2.bottom.pinToSuperview(inset: 16)
+      $2.top.align(with: $1.bottom, offset: 8)
+
     }
     
   }
