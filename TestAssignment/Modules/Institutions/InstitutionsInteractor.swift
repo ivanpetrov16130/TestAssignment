@@ -23,7 +23,7 @@ class InstitutionsInteractor: BasicInteractor {
     case noInstitutions
   }
   
-  let viewStatesReactionQueue: DispatchQueue = InstitutionsInteractor.newViewStatesReactionQueue
+  let eventsReactionQueue: DispatchQueue = InstitutionsInteractor.newEventsReactionQueue
   private(set) weak var holderModule: InstitutionsModule?
   private let provider: InstitutionsProvider
   private let disposeBag = DisposeBag()

@@ -19,23 +19,23 @@ protocol BasicInteractor {
   typealias ObservableState = BehaviorRelay<State>
   
   weak var holderModule: HolderModule? { get }
-  var viewStatesReactionQueue: DispatchQueue { get }
+  var eventsReactionQueue: DispatchQueue { get }
   var state: ObservableState { get }
   
-  func state(for viewState: View.Event)
+  func state(for event: View.Event)
   
-  static var newViewStatesReactionQueue: DispatchQueue { get }
+  static var newEventsReactionQueue: DispatchQueue { get }
   
 }
 
 extension BasicInteractor {
   
-  static var newViewStatesReactionQueue: DispatchQueue {
+  static var newEventsReactionQueue: DispatchQueue {
     return DispatchQueue(label: "ru.motmom.testassigment.\(String(describing: Self.self))", qos: DispatchQoS.userInteractive)
   }
   
-  func computeState(for viewState: View.Event) {
-    viewStatesReactionQueue.sync { self.state(for: viewState) }
+  func computeState(for event: View.Event) {
+    eventsReactionQueue.sync { self.state(for: event) }
   }
   
 }
