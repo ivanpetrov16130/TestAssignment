@@ -44,7 +44,7 @@ class InstitutionDetailsModule: Module {
     let container = Container(parent: viewModelsContainer)
     container.register(InstitutionDetailsViewController.self) { resolver in
       InstitutionDetailsViewController(interactor: resolver.resolve(InstitutionDetailsInteractor.self, argument: self.incomeData)!, viewModel: resolver.resolve(InstitutionDetailsViewModel.self, argument: self.incomeData)!) //TODO: fix force unwrap
-    }//TODO: fix double interactor resolving
+    }
     return container
   }()
   

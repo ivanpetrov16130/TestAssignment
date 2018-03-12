@@ -26,7 +26,7 @@ class InstitutionsModule: Module {
   
   private(set) lazy var interactorsContainer: Container = {
     let container = Container(parent: servicesContainer)
-    container.register(InstitutionsInteractor.self) { resolver in
+    container.register(InstitutionsInteractor.self) { resolver in //TODO: find da way to actually use IoC here and everywhere
       InstitutionsInteractor(holderModule: self, provider: resolver.resolve(InstitutionsProvider.self)!) //TODO: fix force unwrap
     }
     return container

@@ -24,8 +24,9 @@ class InstitutionsViewController: UIViewController, BasicView, Alertable {
   let viewModel: ViewModel
   let disposeBag = DisposeBag()
   
+  let backgroundView: UIImageView = UIImageView(image: #imageLiteral(resourceName: "bgackgroundImage")).styled(with: InstitutionsViewStyle.background)
   let institutionsView: UITableView = UITableView(frame: .zero, style: .plain).styled(with: InstitutionsViewStyle.institutions)
-  let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.gray)
+  let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.whiteLarge)
   
   required init(interactor: InstitutionsInteractor, viewModel: InstitutionsViewModel) {
     self.interactor = interactor
@@ -38,8 +39,12 @@ class InstitutionsViewController: UIViewController, BasicView, Alertable {
   
   override func loadView() {
     super.loadView()
-    view.backgroundColor = .green
-    
+    view.backgroundColor = .clear
+    navigationController?.navigationBar.backgroundColor = #colorLiteral(red: 0.757715732, green: 0.3135699868, blue: 1, alpha: 1)
+    navigationItem.title = "Организации"
+    if #available(iOS 11.0, *) {
+      navigationController?.navigationBar.prefersLargeTitles = true
+    }
     buildViewHierarchyWithConstraints()
   }
 
@@ -86,6 +91,7 @@ extension InstitutionsViewController: Autolayouted {
   var viewHierarchy: ViewHierarchy {
     return .view(view,
                  subhierarchy: [
+                  .view(backgroundView, subhierarchy: nil),
                   .view(institutionsView, subhierarchy: nil),
                   .view(activityIndicator, subhierarchy: nil)
       ]
@@ -93,9 +99,10 @@ extension InstitutionsViewController: Autolayouted {
   }
   
   var autolayoutConstraints: Constraints {
-    return Constraints(for: institutionsView, activityIndicator) {
+    return Constraints(for: backgroundView, institutionsView, activityIndicator) {
       $0.edges.pinToSafeArea(of: self)
-      $1.center.alignWithSuperview()
+      $1.edges.pinToSafeArea(of: self)
+      $2.center.alignWithSuperview()
     }
   }
   

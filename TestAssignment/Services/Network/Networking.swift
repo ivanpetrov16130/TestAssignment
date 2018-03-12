@@ -20,10 +20,6 @@ enum InstitutionsApi {
 
 extension InstitutionsApi: TargetType {
   
-//  var environmentBaseUrl: String {
-//
-//  }
-  
   var baseURL: URL { return URL(string: "https://project-8716260381830912889.firebaseio.com")! }
   
   var path: String {
@@ -42,12 +38,3 @@ extension InstitutionsApi: TargetType {
   var headers: [String : String]? { return nil }
   
 }
-
-//protocol NetworkService {
-//  var institutionsProvider:
-//}
-//
-//class InstitutionsNetworkService: NetworkService {
-//
-//}
-

@@ -47,7 +47,7 @@ extension Autolayouted {
 }
 
 extension Yalta.Constraints {
-  @discardableResult public convenience init<A: LayoutItem, B: LayoutItem, C: LayoutItem, D: LayoutItem, E: LayoutItem, F: LayoutItem, G: LayoutItem, H: LayoutItem, I: LayoutItem>(for a: A, _ b: B, _ c: C, _ d: D, _ e: E, _ f: F, _ g: G, _ h: H, _ i: I, _ closure: (LayoutProxy<A>, LayoutProxy<B>, LayoutProxy<C>, LayoutProxy<D>, LayoutProxy<E>, LayoutProxy<F>, LayoutProxy<G>, LayoutProxy<H>, LayoutProxy<I>) -> Void) {
-    self.init { closure(a.al, b.al, c.al, d.al, e.al, f.al, g.al, h.al, i.al) }
+  @discardableResult public convenience init<A: LayoutItem, B: LayoutItem, C: LayoutItem, D: LayoutItem, E: LayoutItem, F: LayoutItem, G: LayoutItem, H: LayoutItem, I: LayoutItem, J: LayoutItem>(for a: A, _ b: B, _ c: C, _ d: D, _ e: E, _ f: F, _ g: G, _ h: H, _ i: I, _ j: J, _ closure: (LayoutProxy<A>, LayoutProxy<B>, LayoutProxy<C>, LayoutProxy<D>, LayoutProxy<E>, LayoutProxy<F>, LayoutProxy<G>, LayoutProxy<H>, LayoutProxy<I>, LayoutProxy<J>) -> Void) {
+    self.init { closure(a.al, b.al, c.al, d.al, e.al, f.al, g.al, h.al, i.al, j.al) }
   }
 }

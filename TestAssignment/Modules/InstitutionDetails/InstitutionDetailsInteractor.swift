@@ -59,7 +59,7 @@ class InstitutionDetailsInteractor: BasicInteractor {
         let mapCoordinate = CLLocationCoordinate2D(latitude: address.latitude, longitude: address.longitude)
         let mappedAddress = MKMapItem(placemark: MKPlacemark(coordinate: mapCoordinate, addressDictionary:nil))
         mappedAddress.name = address.address
-        mappedAddress.openInMaps() //TODO: move this login into appropriate manager
+        mappedAddress.openInMaps() //TODO: move this logic into appropriate manager
       }
     }
   }

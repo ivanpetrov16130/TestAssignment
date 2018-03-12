@@ -29,12 +29,13 @@ class InstitutionDetailsViewController: UIViewController, BasicView, Alertable {
   let scrollView: UIScrollView = UIScrollView(frame: .zero)
   let contentView: UIView = UIView(frame: .zero)
   
-  let closeButton = UIButton(type: UIButtonType.infoDark)
+  let backgroundView: UIImageView = UIImageView(image: #imageLiteral(resourceName: "bgackgroundImage")).styled(with: InstitutionDetailsStyle.background)
+  let closeButton = UIButton().styled(with: InstitutionDetailsStyle.closeButton)
   let imageView: UIImageView = UIImageView().styled(with: InstitutionDetailsStyle.image)
   let nameLabel: UILabel = UILabel().styled(with: InstitutionDetailsStyle.name)
   let ratingLabel: UILabel = UILabel().styled(with: InstitutionDetailsStyle.rating)
   let descriptionLabel: UILabel = UILabel().styled(with: InstitutionDetailsStyle.description)
-  let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+  let activityIndicator: UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .whiteLarge)
   let addressesView: UITableView = UITableView(frame: .zero, style: .plain).styled(with: InstitutionDetailsStyle.addresses)
   
   var addressesViewHeightConstraint: NSLayoutConstraint?
@@ -50,7 +51,7 @@ class InstitutionDetailsViewController: UIViewController, BasicView, Alertable {
 
   override func loadView() {
     super.loadView()
-    view.backgroundColor = .yellow
+    view.backgroundColor = .white
     
     buildViewHierarchyWithConstraints()
   }
@@ -58,7 +59,7 @@ class InstitutionDetailsViewController: UIViewController, BasicView, Alertable {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    Observable.zip(// TODO: describe wtf is that
+    Observable.zip(// Обновление верстки под высоту контента адресов при отрисовке последней ячейки адреса, происходящей при обновлении данных
       viewModel.institutionAddressesDataSource,
       addressesView.rx.willDisplayCell.skipWhile{ $1.row < self.addressesView.numberOfRows(inSection: 0) - 1 }
       )
@@ -130,6 +131,7 @@ extension InstitutionDetailsViewController: Autolayouted {
   var viewHierarchy: ViewHierarchy {
     return .view(view,
                  subhierarchy: [
+                  .view(backgroundView, subhierarchy: nil),
                   .view(closeButton, subhierarchy: nil),
                   .view(scrollView,
                         subhierarchy: [
@@ -151,15 +153,16 @@ extension InstitutionDetailsViewController: Autolayouted {
     
     view.bringSubview(toFront: closeButton)
     
-    return Constraints(for: closeButton, scrollView, contentView, imageView, nameLabel, ratingLabel, descriptionLabel, addressesView, activityIndicator) {
+    return Constraints(for: backgroundView, closeButton, scrollView, contentView, imageView, nameLabel, ratingLabel, descriptionLabel, addressesView, activityIndicator) {
+      backgroundView, closeButton, scrollView, contentView, imageView, nameLabel, ratingLabel, descriptionLabel, addressesView, activityIndicator in
       
-      closeButton, scrollView, contentView, imageView, nameLabel, ratingLabel, descriptionLabel, addressesView, activityIndicator in
+      backgroundView.edges.pinToSuperview()
       
-      closeButton.left.align(with: imageView.left)
-      closeButton.top.align(with: imageView.top)
+      closeButton.edges(.left, .top).pinToSafeArea(of: self)
       closeButton.size.set(CGSize(width: 40, height: 40))
       
-      scrollView.edges.pinToSafeArea(of: self)
+      scrollView.edges(.left, .right, .bottom).pinToSuperview()
+      scrollView.top.pinToSuperview() 
       
       contentView.width.match(view.al.width)
       contentView.edges(.top, .left, .right).pinToSuperview()
@@ -167,14 +170,15 @@ extension InstitutionDetailsViewController: Autolayouted {
       imageView.edges(.top, .left, .right).pinToSuperview()
       imageView.height.match(view.al.height, multiplier: 0.4)
       
+      ratingLabel.top.align(with: imageView.bottom, offset: 16)
+      ratingLabel.right.pinToSuperview(inset: 16)
+      
       nameLabel.top.align(with: imageView.bottom, offset: 16)
-      nameLabel.edges(.left, .right).pinToSuperview()
+      nameLabel.left.pinToSuperview(inset: 16)
+      nameLabel.right.align(with: ratingLabel.left, offset: -8)
       
-      ratingLabel.top.align(with: nameLabel.bottom, offset: 8)
-      ratingLabel.edges(.left, .right).pinToSuperview()
-      
-      descriptionLabel.top.align(with: ratingLabel.bottom, offset: 8)
-      descriptionLabel.edges(.left, .right).pinToSuperview()
+      descriptionLabel.top.align(with: nameLabel.bottom, offset: 8)
+      descriptionLabel.edges(.left, .right).pinToSuperview(insets: UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 16))
       
       addressesView.top.align(with: descriptionLabel.bottom, offset: 8)
       addressesView.edges(.left, .right).pinToSuperview()
